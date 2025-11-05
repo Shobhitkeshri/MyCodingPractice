@@ -1,0 +1,49 @@
+class Solution {
+public:
+    string findLine(int i,int j,int eachSpaceWillHave,int extraSpace,vector<string> &words,int maxWidth){
+        string line;
+        for(int k=i;k<j;k++){
+           line+=words[k];
+           if(k==j-1) continue;
+           for(int z=1;z<=eachSpaceWillHave;z++){
+            line+=" ";
+           }
+           if(extraSpace>0){
+            line+=" ";
+            extraSpace--;
+           }
+        }
+
+        while(line.length()<maxWidth){
+            line+=" ";
+        }
+        return line;
+    }
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        vector<string> result;
+        int i=0;
+        int n=words.size();
+        while(i<n){
+          int lettersCount=words[i].length();
+          int spaceCount=0;
+          int j=i+1;
+
+          while(j<n && lettersCount +words[j].length()+1+spaceCount<=maxWidth){
+            lettersCount+=words[j].length();
+            spaceCount+=1;
+            j++;
+          }
+          int totalSpace=maxWidth-lettersCount;
+          int eachSpaceWillHave=spaceCount==0 ? 0 : totalSpace/spaceCount;
+          int extraSpace=spaceCount==0 ? 0 : totalSpace%spaceCount;
+
+          if(j==n){
+            eachSpaceWillHave=1;
+            extraSpace=0;
+          }
+          result.push_back(findLine(i,j,eachSpaceWillHave,extraSpace,words,maxWidth));
+          i=j;
+        }
+        return result;
+    }
+};
