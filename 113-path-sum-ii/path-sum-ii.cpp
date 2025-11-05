@@ -31,7 +31,6 @@ public:
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         vector<vector<int>> ans;
         vector<int> singleArr;
-        int sum=0;
         path(root,targetSum,singleArr,ans);
         return ans;
     }
